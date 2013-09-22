@@ -130,8 +130,9 @@
       $list_current.on('toggle', '.checkbox-todo', function (e) {
         var $this = $(this),
           id = $this.val(),
-          completed = $this.prop('checked');
-        general_ajax('PUT', 'todos/' + id, {complete: completed}, function (data){
+          completed = $this.prop('checked'),
+          text = $this.siblings('span').text();
+        general_ajax('PUT', 'todos/' + id, {complete: completed, text: text}, function (data){
 
         });
       });

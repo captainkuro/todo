@@ -34,6 +34,7 @@ class Todos_Driver_Mongo implements Todos_Driver {
 	public function update($id, $obj) {
 		$doc = $this->get($id);
 		$doc['complete'] = (bool) $obj->complete;
+		$doc['text'] = $obj->text;
 		$this->collection->save($doc);
 		return $this->doc_to_obj($doc);
 	}

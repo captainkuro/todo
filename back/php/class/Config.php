@@ -1,7 +1,7 @@
 <?php
 class Config {
 	public static $base_url = '/todo/back/php/';
-	public static $database_driver = 'pdo';
+	public static $database_driver = 'mongo';
 
 	public static $pdo;
 	public static $pdo_settings = array(

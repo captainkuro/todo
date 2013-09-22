@@ -33,9 +33,9 @@ class Todos_Driver_Pdo implements Todos_Driver {
 	}
 
 	public function update($id, $obj) {
-		$sql = 'UPDATE todos SET complete = ? WHERE id = ?';
+		$sql = 'UPDATE todos SET complete = ?, `text` = ? WHERE id = ?';
 		$stmt = $this->pdo->prepare($sql);
-		$stmt->execute(array($obj->complete, $id));
+		$stmt->execute(array($obj->complete, $obj->text, $id));
 
 		return $this->get($id);
 	}

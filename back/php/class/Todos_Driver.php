@@ -15,7 +15,7 @@ interface Todos_Driver {
 
 	/**
 	 * @param  string $id  
-	 * @param  stdClass $obj {complete}
+	 * @param  stdClass $obj {complete, text}
 	 * @return stdClass $obj {id, complete, text}
 	 */
 	public function update($id, $obj);
