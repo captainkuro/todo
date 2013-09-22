@@ -19,6 +19,12 @@
     <![endif]-->
 
     <style type="text/css">
+    #list-current li {
+      margin-top: 10px;
+    }
+    #list-current label {
+      display: inline;
+    }
     #list-current .btn-danger {
       height: 20px;
       line-height: 0;
@@ -41,23 +47,8 @@
       </div>
 
       <ul id="list-current">
-        <!--
-        <li>
-          <label class="checkbox">
-            <input type="checkbox" value="1" data-toggle="checkbox" />
-            Cuci baju
-            <buton class="btn btn-danger">X</button>
-          </label>
-        </li>
-        <li class="completed">
-          <label class="checkbox">
-            <input type="checkbox" value="2" data-toggle="checkbox" checked="checked" />
-            Cuci baju lagi
-            <buton class="btn btn-danger">X</button>
-          </label>
-        </li>
+        
       </ul>
-    -->
     </div>
     <!-- /.container -->
 
@@ -74,34 +65,92 @@
     <script src="js/jquery.tagsinput.js"></script>
     <script src="js/jquery.placeholder.js"></script>
     <script>
-      $('[data-toggle="checkbox"]').each(function () {
-        $(this).checkbox();
-      });
       $("input, textarea").placeholder();
 
       var $input_insert = $('#input-insert'),
         $button_insert = $('#button-insert'),
-        $list_current = $('#list-current');
+        $list_current = $('#list-current'),
+        API_URL = '/todo/back/php/';
+
+      function general_ajax(type, url, data, success) {
+        $.ajax({
+          type: type,
+          url: API_URL + url,
+          dataType: 'json',
+          contentType: 'application/json',
+          data: JSON.stringify(data),
+          success: success
+        });
+      }
+
+      function create_item(id, complete, text) {
+        var $checkbox = $('<input>', {type: 'checkbox', value: id, "class": 'checkbox-todo'}),
+          $label = $('<label>', {"class": 'checkbox'}),
+          $li = $('<li>');
+        if (complete) {
+          $checkbox.prop('checked', true);
+        }
+        $label.append($checkbox);
+        $label.append($('<span>').html(text));
+        $li.append($label);
+        $li.append($('<buton>', {"class": "btn btn-danger"}).html('X'));
+        $checkbox.checkbox();
+        return $li;
+      }
+
       $input_insert.on('keypress', function (e) {
         if (e.which == 13) {
           $button_insert.click();
         }
       });
-      $list_current.on('click', '.btn-danger', function (e) {
-        $(this).parent().parent().remove();
+
+      // Event: get all TODO items
+      general_ajax('GET', 'todos', undefined, function (data) {
+        var i, n, $li, item;
+        for (i=0, n=data.length; i<n; i++) {
+          item = data[i];
+          $li = create_item(item.id, item.complete, item.text);
+          $list_current.append($li);
+        }
       });
+      
+      // Event: delete TODO item
+      $list_current.on('click', '.btn-danger', function (e) {
+        var $this = $(this),
+          $li = $this.parent(),
+          $checkbox = $li.find('input[type="checkbox"]'),
+          id = $checkbox.val();
+        general_ajax('DELETE', 'todos/' + id, {}, function (data) {
+          $li.remove();
+        });
+        e.stopPropagation();
+      });
+
+      // Event: update TODO item
+      $list_current.on('toggle', '.checkbox-todo', function (e) {
+        var $this = $(this),
+          id = $this.val(),
+          completed = $this.prop('checked');
+        general_ajax('PUT', 'todos/' + id, {complete: completed}, function (data){
+
+        });
+      });
+      
+      // Event: add TODO item
       $button_insert.on('click', function (e) {
+        // lock inputs
+        $button_insert.text('Loading...');
         var text = $input_insert.val(),
-          $checkbox = $('<input type="checkbox" value="0" data-toggle="checkbox" />'),
-          $label = $('<label class="checkbox"></label>'),
-          $li = $('<li></li>');
-        $label.append($checkbox);
-        $label.append(text);
-        $label.append('<buton class="btn btn-danger">X</button>');
-        $li.append($label);
-        $list_current.append($li);
-        $checkbox.checkbox();
-        $input_insert.val('');
+          $li = create_item(0, 0, text),
+          $checkbox = $li.find('input.checkbox-todo');
+        
+        general_ajax('POST', 'todos', {text: text}, function (data) {
+          $checkbox.val(data.id);
+          $list_current.append($li);
+          $input_insert.val('');
+          // unlock inputs
+          $button_insert.text('Add');
+        });
       });
     </script>
   </body>
