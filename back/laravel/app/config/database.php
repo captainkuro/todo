@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'default' => 'mysql',
+	'default' => 'mongo',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -48,7 +48,7 @@ return array(
 
 		'sqlite' => array(
 			'driver'   => 'sqlite',
-			'database' => __DIR__.'/../database/production.sqlite',
+			'database' => 'sqlite:D:\xampp\htdocs\todo\back\database\todos.db',
 			'prefix'   => '',
 		),
 
@@ -81,6 +81,11 @@ return array(
 			'username' => 'root',
 			'password' => '',
 			'prefix'   => '',
+		),
+
+		'mongo' => array(
+			'server' => 'mongodb://localhost/',
+			'database' => 'todos',
 		),
 
 	),
