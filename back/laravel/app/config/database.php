@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'default' => 'mongo',
+	'default' => 'sqlite',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -48,7 +48,7 @@ return array(
 
 		'sqlite' => array(
 			'driver'   => 'sqlite',
-			'database' => 'sqlite:D:\xampp\htdocs\todo\back\database\todos.db',
+			'database' => __DIR__.'/../../../database/todos.db',
 			'prefix'   => '',
 		),
 

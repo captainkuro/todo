@@ -15,15 +15,17 @@ class TodoServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		if (Config::get('database.default') == 'mongo') 
+		App::singleton('todo', function() 
 		{
-			$todo = new MongoDriver();
-		}
-		else
-		{
-			$todo = new PDODriver();
-		}
-		App::instance('todo', $todo);
+			if (Config::get('database.default') == 'mongo') 
+			{
+				return new MongoDriver();
+			}
+			else
+			{
+				return new PDODriver();
+			}
+		});
 	}
 
 

@@ -1,11 +1,13 @@
 <?php
+define('SQLITE_DSN', 'sqlite:'.realpath(__DIR__.'/../../database/todos.db'));
+
 class Config {
 	public static $base_url = '/todo/back/php/';
-	public static $database_driver = 'mongo';
+	public static $database_driver = 'pdo';
 
 	public static $pdo;
 	public static $pdo_settings = array(
-		'dsn' => 'sqlite:D:\xampp\htdocs\todo\back\database\todos.db'
+		'dsn' => SQLITE_DSN,
 	);
 
 	public static $mongo;

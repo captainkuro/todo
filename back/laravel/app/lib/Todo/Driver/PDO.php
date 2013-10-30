@@ -1,30 +1,52 @@
 <?php namespace Todo\Driver;
 
+use Todo\Model\Item;
+use stdClass;
+
 class PDO implements DriverInterface {
 
-	protected $pdo;
-
-	public function __construct() {
-		// @TODO
+	private function itemToObj(Item $item) 
+	{
+		$obj = new stdClass();
+		$obj->id = $item->id;
+		$obj->complete = $item->complete;
+		$obj->text = $item->text;
+		return $obj;
 	}
 	
-	public function all() {
-		// @TODO
+	public function all() 
+	{
+		$items = Item::orderBy('id', 'asc')->get();
+		$result = array();
+		foreach ($items as $item)
+		{
+			$result[] = $this->itemToObj($item);
+		}
+		return $result;
 	}
 
-	protected function get($id) {
-		// @TODO
+	public function insert($bag) 
+	{
+		$item = new Item();
+		$item->complete = 0;
+		$item->text = $bag->get('text');
+		$item->save();
+		return $this->itemToObj($item);
 	}
 
-	public function insert($obj) {
-		// @TODO
+	public function update($id, $bag) 
+	{
+		$item = Item::find($id);
+		$item->complete = $bag->get('complete');
+		$item->text = $bag->get('text');
+		$item->save();
+		return $this->itemToObj($item);
 	}
 
-	public function update($id, $obj) {
-		// @TODO
-	}
-
-	public function delete($id) {
-		// @TODO
+	public function delete($id) 
+	{
+		$item = Item::find($id);
+		$item->delete();
+		return new stdClass;
 	}
 }

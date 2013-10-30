@@ -70,7 +70,7 @@
       var $input_insert = $('#input-insert'),
         $button_insert = $('#button-insert'),
         $list_current = $('#list-current'),
-        API_URL = '/todo/back/php/';
+        API_URL = '/todo/back/laravel/public/';
 
       function general_ajax(type, url, data, success) {
         $.ajax({
@@ -87,7 +87,7 @@
         var $checkbox = $('<input>', {type: 'checkbox', value: id, "class": 'checkbox-todo'}),
           $label = $('<label>', {"class": 'checkbox'}),
           $li = $('<li>');
-        if (complete) {
+        if (parseInt(complete)) {
           $checkbox.prop('checked', true);
         }
         $label.append($checkbox);

@@ -8,17 +8,17 @@ interface DriverInterface {
 	public function all();
 
 	/**
-	 * @param  stdClass $obj {text}
+	 * @param  ParameterBag $bag {text}
 	 * @return stdClass $obj {id, complete, text}
 	 */
-	public function insert($obj);
+	public function insert($bag);
 
 	/**
 	 * @param  string $id  
-	 * @param  stdClass $obj {complete, text}
+	 * @param  ParameterBag $bag {complete, text}
 	 * @return stdClass $obj {id, complete, text}
 	 */
-	public function update($id, $obj);
+	public function update($id, $bag);
 
 	/**
 	 * @param  string $id 

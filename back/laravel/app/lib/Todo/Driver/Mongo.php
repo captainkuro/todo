@@ -29,19 +29,19 @@ class Mongo implements DriverInterface {
 		return $this->collection->findOne(array('_id' => $mid));
 	}
 
-	public function insert($obj) {
+	public function insert($bag) {
 		$insert = array(
 			'complete' => false,
-			'text' => $obj->text,
+			'text' => $bag->get('text'),
 		);
 		$this->collection->insert($insert);
 		return $this->doc_to_obj($insert);
 	}
 
-	public function update($id, $obj) {
+	public function update($id, $bag) {
 		$doc = $this->get($id);
-		$doc['complete'] = (bool) $obj->complete;
-		$doc['text'] = $obj->text;
+		$doc['complete'] = (bool) $bag->get('complete');
+		$doc['text'] = $bag->get('text');
 		$this->collection->save($doc);
 		return $this->doc_to_obj($doc);
 	}

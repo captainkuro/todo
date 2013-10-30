@@ -20,3 +20,5 @@ Route::get('tes', function()
 {
 	print_r(Todo::all());
 });
+
+Route::resource('todos', 'TodosController');
