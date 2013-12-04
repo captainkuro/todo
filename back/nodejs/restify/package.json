@@ -1,0 +1,14 @@
+{
+  "name": "todo-restify",
+  "version": "0.0.0",
+  "description": "Todo backend implementation with module restify",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Captain_kurO",
+  "license": "MIT",
+  "dependencies": {
+    "restify": "~2.6.0"
+  }
+}
