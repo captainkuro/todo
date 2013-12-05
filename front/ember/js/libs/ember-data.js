@@ -6279,7 +6279,6 @@ DS.RESTAdapter = DS.Adapter.extend({
       to the original query.
   */
   extractArray: function(store, primaryType, payload) {
-    console.log('extractArray('+Array.prototype.join.call(arguments)+')');
     var primaryTypeName = primaryType.typeKey,
         primaryArray;
 
@@ -6368,7 +6367,6 @@ DS.RESTAdapter = DS.Adapter.extend({
     @returns Object
   */
   normalize: function(type, prop, hash) {
-    console.log('normalize('+Array.prototype.join.call(arguments)+')');
     var serializer = this.serializerFor(type.typeKey);
 
     if (this.normalizeHash && this.normalizeHash[prop]) {
