@@ -5,19 +5,23 @@
 DS.LSAdapter = DS.Adapter.extend(Ember.Evented, {
 
 	init: function () {
+		console.log('init('+Array.prototype.join.call(arguments)+')');
 		this._loadData();
 	},
 
 	generateIdForRecord: function () {
+		console.log('generateIdForRecord('+Array.prototype.join.call(arguments)+')');
 		return Math.random().toString(32).slice(2).substr(0, 5);
 	},
 
 	find: function (store, type, id) {
+		console.log('find('+Array.prototype.join.call(arguments)+')');
 		var namespace = this._namespaceForType(type);
 		return Ember.RSVP.resolve(Ember.copy(namespace.records[id]));
 	},
 
 	findMany: function (store, type, ids) {
+		console.log('findMany('+Array.prototype.join.call(arguments)+')');
 		var namespace = this._namespaceForType(type);
 		var results = [];
 		for (var i = 0; i < ids.length; i++) {
@@ -41,12 +45,14 @@ DS.LSAdapter = DS.Adapter.extend(Ember.Evented, {
   //
   //    { complete: true, name: /foo|bar/ }
 	findQuery: function (store, type, query, recordArray) {
+		console.log('findQuery('+Array.prototype.join.call(arguments)+')');
 		var namespace = this._namespaceForType(type);
 		var results = this.query(namespace.records, query);
 		return Ember.RSVP.resolve(results);
 	},
 
 	query: function (records, query) {
+		console.log('query('+Array.prototype.join.call(arguments)+')');
 		var results = [];
 		var id, record, property, test, push;
 		for (id in records) {
@@ -68,6 +74,7 @@ DS.LSAdapter = DS.Adapter.extend(Ember.Evented, {
 	},
 
 	findAll: function (store, type) {
+		console.log('findAll('+Array.prototype.join.call(arguments)+')');
 		var namespace = this._namespaceForType(type);
 		var results = [];
 		for (var id in namespace.records) {
@@ -77,6 +84,7 @@ DS.LSAdapter = DS.Adapter.extend(Ember.Evented, {
 	},
 
 	createRecord: function (store, type, record) {
+		console.log('createRecord('+Array.prototype.join.call(arguments)+')');
 		var namespace = this._namespaceForType(type);
 		this._addRecordToNamespace(namespace, record);
 		this._saveData();
@@ -84,6 +92,7 @@ DS.LSAdapter = DS.Adapter.extend(Ember.Evented, {
 	},
 
 	updateRecord: function (store, type, record) {
+		console.log('updateRecord('+Array.prototype.join.call(arguments)+')');
 		var namespace = this._namespaceForType(type);
 		var id = record.get('id');
 		namespace.records[id] = record.toJSON({ includeId: true });
@@ -92,6 +101,7 @@ DS.LSAdapter = DS.Adapter.extend(Ember.Evented, {
 	},
 
 	deleteRecord: function (store, type, record) {
+		console.log('deleteRecord('+Array.prototype.join.call(arguments)+')');
 		var namespace = this._namespaceForType(type);
 		var id = record.get('id');
 		delete namespace.records[id];

@@ -21,7 +21,7 @@ Todos.TodosController = Ember.ArrayController.extend({
     clearCompleted: function () {
       var completed = this.filterBy('isCompleted', true);
       completed.invoke('deleteRecord');
-      completed.invoko('save');
+      completed.invoke('save');
     }
   },
 
