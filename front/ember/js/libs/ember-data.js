@@ -6145,7 +6145,6 @@ DS.RESTAdapter = DS.Adapter.extend({
     @returns Object the primary response to the original request
   */
   extractSingle: function(store, primaryType, payload, recordId, requestType) {
-    console.log('extractSingle('+Array.prototype.join.call(arguments)+')');
     var primaryTypeName = primaryType.typeKey,
         primaryRecord;
 
